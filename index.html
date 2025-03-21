@@ -13,6 +13,37 @@
             padding: 0;
             line-height: 1.6;
             color: #333;
+            overflow: hidden; /* Prevent scrolling during loading */
+        }
+        /* Loader styles */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+        }
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none; /* Allow clicks through when hidden */
+        }
+        .logo {
+            font-size: 80px;
+            font-weight: bold;
+            color: #3498db;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
         }
         .container {
             max-width: 1200px;
@@ -20,6 +51,11 @@
             padding: 20px;
             display: flex;
             flex-wrap: wrap;
+            opacity: 0; /* Start hidden */
+            transition: opacity 0.5s ease-in;
+        }
+        .container.visible {
+            opacity: 1; /* Fade in when loader hides */
         }
         .left-column {
             width: 25%;
@@ -27,7 +63,7 @@
             padding: 20px;
             text-align: center;
             box-sizing: border-box;
-            border-radius: 10px; /* Rounded corners for a softer look */
+            border-radius: 10px;
         }
         .right-column {
             width: 75%;
@@ -40,7 +76,7 @@
             border-radius: 50%;
             object-fit: cover;
             margin-bottom: 15px;
-            border: 3px solid #3498db; /* Subtle border around photo */
+            border: 3px solid #3498db;
         }
         .left-column h1 {
             margin: 10px 0 5px;
@@ -53,7 +89,7 @@
             margin-bottom: 20px;
         }
         .left-column #contact h2 {
-            font-size: 1.2em; /* Smaller heading for contact */
+            font-size: 1.2em;
             margin-bottom: 15px;
         }
         .left-column #contact p {
@@ -65,8 +101,8 @@
         }
         .left-column #contact i {
             margin-right: 8px;
-            color: #3498db; /* Icon color matches theme */
-            width: 20px; /* Consistent icon width */
+            color: #3498db;
+            width: 20px;
         }
         section {
             margin: 40px 0;
@@ -93,7 +129,7 @@
             background: #ecf0f1;
             padding: 5px 10px;
             border-radius: 5px;
-            transition: background 0.3s; /* Smooth hover effect */
+            transition: background 0.3s;
         }
         .skills-list span:hover {
             background: #3498db;
@@ -111,7 +147,7 @@
             padding: 20px;
             background: #f4f4f4;
             margin-top: 40px;
-            border-radius: 10px; /* Rounded footer */
+            border-radius: 10px;
         }
         @media (max-width: 800px) {
             .left-column, .right-column {
@@ -131,6 +167,11 @@
     </style>
 </head>
 <body>
+    <!-- Loader with Logo -->
+    <div class="loader">
+        <div class="logo">MT</div>
+    </div>
+
     <div class="container">
         <div class="left-column">
             <img src="mahsa-tajik-photo.jpg" alt="Mahsa Tajik Photo">
@@ -141,7 +182,6 @@
                 <p><i class="fas fa-envelope"></i> <a href="mailto:mahtaj93@gmail.com">mahtaj93@gmail.com</a></p>
                 <p><i class="fab fa-github"></i> <a href="https://github.com/Mahsatajik" target="_blank">Mahsatajik</a></p>
                 <p><i class="fab fa-linkedin"></i> <a href="https://www.linkedin.com/in/mahsa-tajik/" target="_blank">mahsa-tajik</a></p>
-                
             </section>
         </div>
 
@@ -205,5 +245,18 @@
     <footer>
         <p>© 2025 Mahsa Tajik. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript to hide loader and show content -->
+    <script>
+        window.addEventListener('load', function() {
+            const loader = document.querySelector('.loader');
+            const container = document.querySelector('.container');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+                container.classList.add('visible');
+                document.body.style.overflow = 'auto'; // Restore scrolling
+            }, 2000); // Show logo for 2 seconds
+        });
+    </script>
 </body>
 </html>
